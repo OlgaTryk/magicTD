@@ -1,6 +1,6 @@
 import pygame
 from data.thread_data import *
-from data.screen_data import height, width, tile_size
+from data.screen_data import *
 import keyboard
 
 clock = pygame.time.Clock()
@@ -9,16 +9,16 @@ clock = pygame.time.Clock()
 def main():
     pygame.init()
     screen = pygame.display.set_mode((width, height))
+    bg = pygame.image.load("assets/background.png")
 
     while True:
         pygame.display.flip()
-        screen.fill((0, 0, 0))
-        pygame.draw.rect(screen, (255, 255, 255), (cursor.x, cursor.y, tile_size, tile_size), 1)
+        screen.blit(bg, (0, 0))
+        pygame.draw.rect(screen, (255, 255, 255), (cursor.x*tile_size, cursor.y*tile_size, tile_size, tile_size), 1)
         # sets event_stop after closing the game window
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 event_stop.set()
-
         if event_stop.is_set():
             pygame.quit()
             break
@@ -30,4 +30,7 @@ def main():
 threadKeyboard = threading.Thread(target=keyboard.listener)
 threadKeyboard.start()
 
-main()
+try:
+    main()
+except KeyboardInterrupt:
+    event_stop.set()
