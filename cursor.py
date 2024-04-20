@@ -1,5 +1,8 @@
-from data.screen_data import *
-from data.screen_data import Tile
+"""
+controls the cursor used for placing towers
+"""
+
+from data.screen_data import HEIGHT, WIDTH, TILE_SIZE, Tile
 from data.board_data import board
 
 
@@ -9,22 +12,25 @@ class Cursor:
         self.y = y
 
     def move_left(self):
+        """ moves the cursor one tile to the left unless the destination tile is UI/offscreen """
         if self.x > 0:
             if board.get_tile(self.x-1, self.y) != Tile.UI:
                 self.x -= 1
 
     def move_right(self):
-        if self.x < int(width/tile_size) - 1:
+        """ moves the cursor one tile to the right unless the destination tile is UI/offscreen """
+        if self.x < int(WIDTH/TILE_SIZE) - 1:
             if board.get_tile(self.x+1, self.y) != Tile.UI:
                 self.x += 1
 
     def move_up(self):
+        """ moves the cursor one tile up unless the destination tile is UI/offscreen """
         if self.y > 0:
             if board.get_tile(self.x, self.y-1) != Tile.UI:
                 self.y -= 1
 
     def move_down(self):
-        if self.y < int(height/tile_size) - 1:
+        """ moves the cursor one tile down unless the destination tile is UI/offscreen """
+        if self.y < int(HEIGHT/TILE_SIZE) - 1:
             if board.get_tile(self.x, self.y+1) != Tile.UI:
                 self.y += 1
-

@@ -1,6 +1,10 @@
-from ctypes import *
-from data.thread_data import *
+"""
+keyboard input controller
+"""
+
+from ctypes import windll
 import time
+from data.thread_data import threading, cursor, game, event_stop
 
 
 def listener():
@@ -30,7 +34,8 @@ def listener():
         # space - start next wave
         if user.GetKeyState(0x20) >> 15:
             if game.is_wave_over:
-                game.next_wave()
+                wave_thread = threading.Thread(target=game.next_wave, daemon=True)
+                wave_thread.start()
                 time.sleep(0.2)
         if event_stop.is_set():
             break
