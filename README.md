@@ -11,10 +11,13 @@ Elemental Kingdom: Guardians of the Realm is a tower defense game in about wizar
 |---|---|
 |Arrow keys | Controlling the cursor (white square)|
 |Escape | Exit the game|
+|Spacebar | Start next wave|
 
 ## Threads ##
-- _Main thread_ - drawing the game window
-- _Keyboard thread_ - reading and processing keyboard input
+- _Main thread_ - draws the game window
+- _Keyboard thread_ - reads and processes keyboard input
+- _Wave thread_ - spawns enemies, checks if any remain or if a new wave can be started
+- _Enemy threads_ - moves the enemy it applies to, kills it when it runs out of health and removes lives when it reaches the end
 
 ### Modules ###
 - pygame
