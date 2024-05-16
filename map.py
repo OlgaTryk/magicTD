@@ -17,5 +17,9 @@ class Map:
                 self.tiles[coords[1]][coords[0]] = Tile.PATH
 
     def get_tile(self, x, y):
-        """  returns type of given tile """
+        """  returns the type of given tile """
         return self.tiles[y][x]
+
+    def set_tile(self, x, y, tile):
+        """ sets the type of a given tile """
+        self.tiles[y][x] = tile

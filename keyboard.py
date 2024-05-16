@@ -5,7 +5,10 @@ keyboard input controller
 from ctypes import windll
 import time
 from data.thread_data import threading, cursor, game, event_stop
-
+from data.wave_data import TOWER_TYPES
+from tower import Tower
+from data.screen_data import Tile
+from data.board_data import board
 
 def listener():
     user = windll.user32
@@ -37,5 +40,14 @@ def listener():
                 wave_thread = threading.Thread(target=game.next_wave, daemon=True)
                 wave_thread.start()
                 time.sleep(0.2)
+        # 1 key - place first tower
+        if user.GetKeyState(0x31) >> 15:
+            if board.get_tile(cursor.x, cursor.y) == Tile.EMPTY_GRASS:
+                tower_type = "magic"
+                if game.money >= TOWER_TYPES[tower_type]["price"]:
+                    game.money -= TOWER_TYPES[tower_type]["price"]
+                    game.towers.append(Tower(tower_type))
+                    board.set_tile(cursor.x, cursor.y, Tile.TOWER)
+            time.sleep(0.2)
         if event_stop.is_set():
             break

@@ -23,6 +23,7 @@ class Game:
         self.is_game_won = False
         # is_game_over == True and is_game_won == False means the game was lost
         self.enemies = []
+        self.towers = []
 
     def next_wave(self):
         """ spawns the next wave and ends game after the last one """
