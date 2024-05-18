@@ -61,7 +61,7 @@ class Game:
             self.is_game_over = True
         else:
             with money_lock:
-                self.money += self.curr_wave * 100
+                self.money += self.curr_wave * 50
 
     def lose_lives(self, lives_lost):
         """ removes lives when an enemy reaches the end

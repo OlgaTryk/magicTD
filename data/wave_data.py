@@ -2,24 +2,24 @@
 
 ENEMY_TYPES = {
     "goblin": {
-        "health": 10,
+        "health": 15,
         "speed": 200,
-        "damage": 100,
-        "money": 10
+        "damage": 2,
+        "money": 5
     },
     "orc": {
-        "health": 25,
-        "speed": 30,
+        "health": 30,
+        "speed": 50,
         "damage": 5,
-        "money": 50
+        "money": 20
     }
     # TODO: add more types (especially faster enemy)
 }
 
 TOWER_TYPES = {
     "magic": {
-        "damage": 2,
-        "speed": 2,
+        "damage": 1,
+        "speed": 5,
         "price": 100,
         "range": 2
     },
@@ -35,43 +35,50 @@ TOWER_TYPES = {
 WAVE_SPAWN_DATA = [
     # wave 1
     {
-        "goblin": 2
+        "goblin": 3
     },
     # wave 2
     {
-        "goblin": 3
+        "goblin": 5
     },
     # wave 3
     {
-        "goblin": 5
+        "goblin": 7,
+        "orc": 3
     },
     # wave 4
     {
-        "goblin": 7
+        "goblin": 10,
+        "orc": 5
     },
     # wave 5
     {
-        "goblin": 10
+        "goblin": 10,
+        "orc": 10
     },
     # wave 6
     {
-        "goblin": 11
+        "goblin": 20,
+        "orc": 10
     },
     # wave 7
     {
-        "goblin": 12
+        "goblin": 25,
+        "orc": 15
     },
     # wave 8
     {
-        "goblin": 13
+        "orc": 30
     },
     # wave 9
     {
-        "goblin": 14
+        "goblin": 30,
+        "orc": 30
     },
     # wave 10
     {
-        "goblin": 15
+        "goblin": 50,
+        "orc": 50
     }
     # TODO: change the waves once all the enemy types are defined
 ]

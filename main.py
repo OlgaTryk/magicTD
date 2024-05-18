@@ -20,7 +20,8 @@ def main():
     bg = pygame.image.load("assets/background.png")
     font = pygame.freetype.Font("assets/segoeuib.ttf", 40)
     enemy_sprites = {
-        "goblin": pygame.image.load("assets/goblin.png")
+        "goblin": pygame.image.load("assets/goblin.png"),
+        "orc": pygame.image.load("assets/orc.png")
     }
     tower_sprites = {
         "magic": pygame.image.load("assets/magic_tower.png")
