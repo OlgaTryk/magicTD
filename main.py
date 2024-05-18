@@ -79,7 +79,7 @@ def endgame():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 event_stop.set()
-        if event_stop.is_set()
+        if event_stop.is_set():
             return
         clock.tick(60)
 
