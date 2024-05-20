@@ -4,7 +4,7 @@ Elemental Kingdom: Guardians of the Realm is a tower defense game in about wizar
 
 ## Game Screen ##
 
-![gameScreen](https://github.com/OlgaTryk/magicTD/assets/127615584/bec89cd4-fdb5-46d0-a1c6-82c7fe3bd73b)
+![gameScreen](https://github.com/OlgaTryk/magicTD/assets/127615584/c8798407-3f4a-451d-8457-a9a029ae6e5b)
 
 ## Controls ##
 | | |
@@ -12,12 +12,22 @@ Elemental Kingdom: Guardians of the Realm is a tower defense game in about wizar
 |Arrow keys | Controlling the cursor (white square)|
 |Escape | Exit the game|
 |Spacebar | Start next wave|
+|1 | Place magic tower|
+|2 | Place ice tower |
 
 ## Threads ##
 - _Main thread_ - draws the game window
 - _Keyboard thread_ - reads and processes keyboard input
 - _Wave thread_ - spawns enemies, checks if any remain or if a new wave can be started
-- _Enemy threads_ - moves the enemy it applies to, kills it when it runs out of health and removes lives when it reaches the end
+- _Enemy threads_ - move the enemy they apply to, kill it and give money when it runs out of health, remove lives when it reaches the end
+- _Tower threads_ - find and attack enemies in range
+
+## Critical sections ##
+| Resource | Type |
+| ---|---|
+| Player lives | Mutex |
+| Player money | Mutex |
+| Enemy health | Mutex |
 
 ### Modules ###
 - pygame
