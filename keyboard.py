@@ -2,6 +2,7 @@
 keyboard input controller
 """
 
+import os, sys
 from ctypes import windll
 from data.thread_data import threading, time, cursor, event_stop, tower_range
 from data.wave_data import TOWER_TYPES
@@ -12,7 +13,7 @@ from data.game_data import game
 
 
 def check_for_tower():
-
+    """ checks if the tile with the cursor has a tower (to show range)"""
     tower = game.check_for_tower(cursor.x * TILE_SIZE, cursor.y * TILE_SIZE)
     if tower is not None:
         tower_range[0] = True
@@ -22,6 +23,19 @@ def check_for_tower():
     else:
         tower_range[0] = False
 
+def place_tower(tower_type):
+    # check if tile is valid
+    if board.get_tile(cursor.x, cursor.y) == Tile.EMPTY_GRASS:
+        # check if the player can afford the tower
+        if game.money >= TOWER_TYPES[tower_type]["price"]:
+            game.change_money(-TOWER_TYPES[tower_type]["price"])
+            tower = Tower(tower_type)
+            game.towers.append(tower)
+            check_for_tower()
+            board.set_tile(cursor.x, cursor.y, Tile.TOWER)
+            thread = threading.Thread(target=tower.attack, daemon=True)
+            thread.start()
+            game.tower_threads.append(thread)
 
 def listener():
     user = windll.user32
@@ -64,17 +78,9 @@ def listener():
                 time.sleep(0.2)
         # 1 key - place first tower
         if user.GetKeyState(0x31) >> 15:
-            # check if tile is valid
-            if board.get_tile(cursor.x, cursor.y) == Tile.EMPTY_GRASS:
-                tower_type = "magic"
-                # check if the player can afford the tower
-                if game.money >= TOWER_TYPES[tower_type]["price"]:
-                    game.change_money(-TOWER_TYPES[tower_type]["price"])
-                    tower = Tower(tower_type)
-                    game.towers.append(Tower(tower_type))
-                    check_for_tower()
-                    board.set_tile(cursor.x, cursor.y, Tile.TOWER)
-                    thread = threading.Thread(target=tower.attack, daemon=True)
-                    thread.start()
-                    game.tower_threads.append(thread)
+            place_tower("magic")
+            time.sleep(0.2)
+        # 2 key - place second tower
+        if user.GetKeyState(0x32) >> 15:
+            place_tower("ice")
             time.sleep(0.2)

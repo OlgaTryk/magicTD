@@ -5,13 +5,13 @@ ENEMY_TYPES = {
         "health": 15,
         "speed": 200,
         "damage": 2,
-        "money": 5
+        "money": 10
     },
     "orc": {
-        "health": 30,
+        "health": 100,
         "speed": 50,
-        "damage": 5,
-        "money": 20
+        "damage": 10,
+        "money": 30
     }
     # TODO: add more types (especially faster enemy)
 }
@@ -23,7 +23,7 @@ TOWER_TYPES = {
         "price": 100,
         "range": 2
     },
-    "flame": {
+    "ice": {
         "damage": 5,
         "speed": 1,
         "price": 300,

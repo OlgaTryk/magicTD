@@ -24,7 +24,12 @@ def main():
         "orc": pygame.image.load("assets/orc.png")
     }
     tower_sprites = {
-        "magic": pygame.image.load("assets/magic_tower.png")
+        "magic": pygame.image.load("assets/magic_tower.png"),
+        "ice": pygame.image.load("assets/ice_tower.png")
+    }
+    tower_attack_sprites = {
+        "magic": pygame.image.load("assets/magic_attack.png"),
+        "ice": pygame.image.load("assets/ice_attack.png")
     }
     while True:
         pygame.display.flip()
@@ -44,8 +49,12 @@ def main():
                             tower_range[2] * TILE_SIZE - (tower_range[3] * TILE_SIZE)))
         for tower in game.towers:
             screen.blit(tower_sprites[tower.tower_type], (tower.pos[0], tower.pos[1]))
-            # if tower.is_attacking:
-                # pygame.draw.line(screen, (128, 0, 128), (tower.pos[0], tower.pos[1]), tower.target, width=5)
+            if tower.is_attacking:
+                tower.attack_on += 1
+                if tower.attack_on < 60 / tower.speed:
+                    screen.blit(tower_attack_sprites[tower.tower_type], (tower.pos[0], tower.pos[1]))
+                elif tower.attack_on == 2 * (60 / tower.speed):
+                    tower.attack_on = 0
         pygame.draw.rect(screen, WHITE,
                          (cursor.x * TILE_SIZE, cursor.y * TILE_SIZE, TILE_SIZE, TILE_SIZE), 1)
         # sets event_stop after closing the game window
@@ -68,7 +77,7 @@ def endgame():
     font2 = pygame.font.Font("assets/segoeuib.ttf", 50)
     while True:
         if game.is_game_won:
-            text = font.render("YOU WON", True, WHITE)
+            text = font.render("YOU WON!", True, WHITE)
         else:
             text = font.render("YOU LOST", True, WHITE)
         text2 = font2.render("Press esc to quit", True, WHITE)
