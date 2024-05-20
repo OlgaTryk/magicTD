@@ -1,3 +1,7 @@
+"""
+represents the screen as array of tiles of different types
+"""
+
 from data.screen_data import HEIGHT, WIDTH, TILE_SIZE, PATH, Tile
 
 
@@ -21,5 +25,5 @@ class Map:
         return self.tiles[y][x]
 
     def set_tile(self, x, y, tile):
-        """ sets the type of a given tile """
+        """ sets the type of given tile """
         self.tiles[y][x] = tile

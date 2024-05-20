@@ -2,14 +2,13 @@
 keyboard input controller
 """
 
-import os, sys
 from ctypes import windll
+from data.board_data import board
+from data.game_data import game
+from data.screen_data import Tile, TILE_SIZE
 from data.thread_data import threading, time, cursor, event_stop, tower_range
 from data.wave_data import TOWER_TYPES
 from tower import Tower
-from data.screen_data import Tile, TILE_SIZE
-from data.board_data import board
-from data.game_data import game
 
 
 def check_for_tower():
@@ -23,7 +22,9 @@ def check_for_tower():
     else:
         tower_range[0] = False
 
+
 def place_tower(tower_type):
+    """ places the tower and starts a thread for it """
     # check if tile is valid
     if board.get_tile(cursor.x, cursor.y) == Tile.EMPTY_GRASS:
         # check if the player can afford the tower

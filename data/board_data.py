@@ -1,8 +1,6 @@
 """
 shared between threads, can't be in thread_data because of a circular import
 """
-import map
+import game_map
 
-board = map.Map()
-
-
+board = game_map.Map()

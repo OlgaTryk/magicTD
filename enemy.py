@@ -6,8 +6,6 @@ from data.thread_data import threading, time
 from data.wave_data import ENEMY_TYPES
 from data.screen_data import TILE_SIZE, PATH
 
-health_lock = threading.Lock()
-
 
 class Enemy:
     def __init__(self, enemy_type):
@@ -16,8 +14,10 @@ class Enemy:
         self.speed = ENEMY_TYPES.get(enemy_type)["speed"]
         self.damage = ENEMY_TYPES.get(enemy_type)["damage"]
         self.money = ENEMY_TYPES.get(enemy_type)["money"]
-        self.pos = [(PATH[0][0] * TILE_SIZE) - TILE_SIZE, PATH[0][1] * TILE_SIZE]  # enemies spawn offscreen
+        self.pos = [(PATH[0][0] * TILE_SIZE) - TILE_SIZE,
+                    PATH[0][1] * TILE_SIZE]  # enemies spawn offscreen
         self.tile = 0  # index of the current tile on the path
+        self.health_lock = threading.Lock()
 
     def move(self, game):
         """ moves along the path towards the exit """
@@ -35,7 +35,8 @@ class Enemy:
             else:
                 # the path never leads back to the left, so only other option is down
                 self.pos[1] -= 1
-            if self.pos[0] == PATH[self.tile + 1][0] * TILE_SIZE and self.pos[1] == PATH[self.tile + 1][1] * TILE_SIZE:
+            if (self.pos[0] == PATH[self.tile + 1][0] * TILE_SIZE
+                    and self.pos[1] == PATH[self.tile + 1][1] * TILE_SIZE):
                 # current position == next tile -> set next tile as current tile
                 self.tile += 1
             time.sleep(1/self.speed)
@@ -44,14 +45,12 @@ class Enemy:
 
     def take_damage(self, damage):
         """ lowers health while avoiding negative values """
-        with health_lock:
+        with self.health_lock:
             if self.health >= damage:
                 self.health -= damage
             else:
                 self.health = 0
 
     def reached_end(self):
-        if self.tile != len(PATH) - 1:
-            return True
-        else:
-            return False
+        """ returns True if the enemy has reached the end of the path"""
+        return bool(self.tile != len(PATH) - 1)

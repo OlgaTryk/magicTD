@@ -83,5 +83,7 @@ class Game:
         return None
 
     def change_money(self, amount):
+        """ adds the amount to player money
+        (for subtraction give negative amount) """
         with money_lock:
             self.money += amount

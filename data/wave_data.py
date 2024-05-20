@@ -13,7 +13,6 @@ ENEMY_TYPES = {
         "damage": 10,
         "money": 30
     }
-    # TODO: add more types (especially faster enemy)
 }
 
 TOWER_TYPES = {
@@ -29,7 +28,6 @@ TOWER_TYPES = {
         "price": 300,
         "range": 1
     }
-    # TODO: add 1-2 more types, add more stats to all
 }
 
 WAVE_SPAWN_DATA = [
@@ -80,5 +78,4 @@ WAVE_SPAWN_DATA = [
         "goblin": 50,
         "orc": 50
     }
-    # TODO: change the waves once all the enemy types are defined
 ]
