@@ -3,6 +3,7 @@ import pygame.freetype
 from data.thread_data import threading, event_stop, cursor, tower_range
 from data.screen_data import HEIGHT, WIDTH, TILE_SIZE
 from data.game_data import game
+from data.wave_data import TOWER_TYPES
 import keyboard
 
 clock = pygame.time.Clock()
@@ -35,7 +36,10 @@ def main():
         pygame.display.flip()
         screen.blit(bg, (0, 0))
         font.render_to(screen, (61, 15), str(game.lives), WHITE)
-        font.render_to(screen, (61, 500), str(game.money), BLACK)
+        font.render_to(screen, (61, 495), str(game.money), BLACK)
+        for i in range(0, len(tower_sprites)):
+            font.render_to(screen, (480 + 60 * 3 * i, 495), str(TOWER_TYPES.get(list(TOWER_TYPES.keys())[i])["price"]), BLACK)
+
         if game.curr_wave > 0:
             font.render_to(screen, (960 - 180, 15), "Wave " + str(game.curr_wave), WHITE)
             if not game.is_wave_over:
