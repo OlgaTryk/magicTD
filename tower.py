@@ -15,6 +15,7 @@ class Tower:
         self.range = TOWER_TYPES.get(tower_type)["range"]
         self.pos = [cursor.x * TILE_SIZE, cursor.y * TILE_SIZE]
         self.is_attacking = False
+        self.target = None
         self.attack_on = 0  # number of frames the attack has been displayed
 
     def attack(self):
@@ -22,12 +23,27 @@ class Tower:
         while True:
             self.is_attacking = False
             for enemy in game.enemies:
-                # range is asymmetrical because self.pos is upper left corner
-                if self.pos[0] - self.range * TILE_SIZE <= enemy.pos[0] < self.pos[0] + (self.range + 1) * TILE_SIZE:
-                    if self.pos[1] - self.range * TILE_SIZE <= enemy.pos[1] < self.pos[1] + (self.range + 1) * TILE_SIZE:
-                        self.is_attacking = True
+                if self.is_in_range(enemy):
+                    self.is_attacking = True
+                    # ice towers don't do damage
+                    if self.tower_type == "ice":
+                        enemy.is_slowed = True
+                    else:
                         enemy.take_damage(self.damage)
-                        # magic towers target only the first enemy, ice towers attack all enemies in range
-                        if self.tower_type == "magic":
-                            break
+                    # magic towers target only the first enemy
+                    if self.tower_type == "magic":
+                        self.target = enemy
+                        break
+                elif self.tower_type == "ice":
+                    enemy.is_slowed = False
+
             time.sleep(1/self.speed)
+
+    def is_in_range(self, enemy):
+        """ returns True if the enemy is in range of the tower
+            range is asymmetrical because self.pos is upper left corner """
+        lower_x = self.pos[0] - self.range * TILE_SIZE
+        upper_x = self.pos[0] + (self.range + 1) * TILE_SIZE
+        lower_y = self.pos[1] - self.range * TILE_SIZE
+        upper_y = self.pos[1] + (self.range + 1) * TILE_SIZE
+        return lower_x <= enemy.pos[0] < upper_x and lower_y <= enemy.pos[1] < upper_y

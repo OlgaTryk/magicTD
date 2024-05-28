@@ -17,6 +17,7 @@ class Enemy:
         self.pos = [(PATH[0][0] * TILE_SIZE) - TILE_SIZE,
                     PATH[0][1] * TILE_SIZE]  # enemies spawn offscreen
         self.tile = 0  # index of the current tile on the path
+        self.is_slowed = False
         self.health_lock = threading.Lock()
 
     def move(self, game):
@@ -39,7 +40,10 @@ class Enemy:
                     and self.pos[1] == PATH[self.tile + 1][1] * TILE_SIZE):
                 # current position == next tile -> set next tile as current tile
                 self.tile += 1
-            time.sleep(1/self.speed)
+            if self.is_slowed:
+                time.sleep(2/self.speed)
+            else:
+                time.sleep(1/self.speed)
         game.lose_lives(self.damage)
         game.enemies.remove(self)
 

@@ -38,6 +38,7 @@ def place_tower(tower_type):
             thread.start()
             game.tower_threads.append(thread)
 
+
 def listener():
     user = windll.user32
     # GetKeyState() returns 16 bit value, MSB is 1 when key is down
@@ -84,4 +85,8 @@ def listener():
         # 2 key - place second tower
         if user.GetKeyState(0x32) >> 15:
             place_tower("ice")
+            time.sleep(0.2)
+        # 3 key - place third tower
+        if user.GetKeyState(0x33) >> 15:
+            place_tower("fire")
             time.sleep(0.2)

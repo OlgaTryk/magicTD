@@ -5,29 +5,36 @@ ENEMY_TYPES = {
         "health": 15,
         "speed": 200,
         "damage": 2,
-        "money": 10
+        "money": 5
     },
     "orc": {
         "health": 100,
         "speed": 50,
         "damage": 10,
-        "money": 30
+        "money": 15
     }
 }
 
 TOWER_TYPES = {
     "magic": {
-        "damage": 1,
+        "damage": 2,
         "speed": 5,
         "price": 100,
         "range": 2
     },
     "ice": {
+        "damage": 0,
+        "speed": 10,
+        "price": 200,
+        "range": 1
+    },
+    "fire": {
         "damage": 5,
-        "speed": 1,
-        "price": 300,
+        "speed": 2,
+        "price": 400,
         "range": 1
     }
+
 }
 
 WAVE_SPAWN_DATA = [

@@ -18,16 +18,22 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 bg = pygame.image.load("assets/background.png")
 font = pygame.freetype.Font("assets/segoeuib.ttf", 40)
 enemy_sprites = {
-    "goblin": pygame.image.load("assets/goblin.png"),
-    "orc": pygame.image.load("assets/orc.png")
+    "goblin": pygame.image.load("assets/enemies/goblin.png"),
+    "orc": pygame.image.load("assets/enemies/orc.png")
+}
+enemy_sprites_frozen = {
+    "goblin": pygame.image.load("assets/enemies/goblin_frozen.png"),
+    "orc": pygame.image.load("assets/enemies/orc_frozen.png")
 }
 tower_sprites = {
-    "magic": pygame.image.load("assets/magic_tower.png"),
-    "ice": pygame.image.load("assets/ice_tower.png")
+    "magic": pygame.image.load("assets/towers/magic_tower.png"),
+    "ice": pygame.image.load("assets/towers/ice_tower.png"),
+    "fire": pygame.image.load("assets/towers/fire_tower.png")
 }
 tower_attack_sprites = {
-    "magic": pygame.image.load("assets/magic_attack.png"),
-    "ice": pygame.image.load("assets/ice_attack.png")
+    "magic": pygame.image.load("assets/towers/magic_attack.png"),
+    "ice": pygame.image.load("assets/towers/ice_attack.png"),
+    "fire": pygame.image.load("assets/towers/fire_attack.png")
 }
 
 
@@ -52,26 +58,40 @@ def draw_towers():
             elif tower.attack_on == 2 * (60 / tower.speed):
                 tower.attack_on = 0
 
+    # magic tower attacks
+    # need to be drawn on top of towers
+    for tower in game.towers:
+        if tower.tower_type == "magic" and tower.is_attacking:
+            pygame.draw.line(screen, (255, 0, 255), (tower.pos[0] + 30, tower.pos[1] + 30),
+                             (tower.target.pos[0] + 30, tower.target.pos[1] + 30), 10)
+
 
 def main():
     """ main loop, mostly drawing the GUI """
     while True:
         pygame.display.flip()
         screen.blit(bg, (0, 0))
+
+        if game.curr_wave > 0:
+            font.render_to(screen, (960 - 180, 15), "Wave " + str(game.curr_wave), WHITE)
+            # draw enemies
+            if not game.is_wave_over:
+                for enemy in game.enemies:
+                    if enemy.is_slowed:
+                        screen.blit(enemy_sprites_frozen[enemy.enemy_type], (enemy.pos[0], enemy.pos[1]))
+                    else:
+                        screen.blit(enemy_sprites[enemy.enemy_type], (enemy.pos[0], enemy.pos[1]))
+
+        draw_towers()
+        # draw cursor
+        pygame.draw.rect(screen, WHITE,
+                         (cursor.x * TILE_SIZE, cursor.y * TILE_SIZE, TILE_SIZE, TILE_SIZE), 1)
+        # draw ui text
         font.render_to(screen, (61, 15), str(game.lives), WHITE)
         font.render_to(screen, (61, 495), str(game.money), BLACK)
         for i in range(0, len(tower_sprites)):
             font.render_to(screen, (360 + 60 * 3 * i, 495),
                            str(TOWER_TYPES.get(list(TOWER_TYPES.keys())[i])["price"]), BLACK)
-
-        if game.curr_wave > 0:
-            font.render_to(screen, (960 - 180, 15), "Wave " + str(game.curr_wave), WHITE)
-            if not game.is_wave_over:
-                for enemy in game.enemies:
-                    screen.blit(enemy_sprites[enemy.enemy_type], (enemy.pos[0], enemy.pos[1]))
-        draw_towers()
-        pygame.draw.rect(screen, WHITE,
-                         (cursor.x * TILE_SIZE, cursor.y * TILE_SIZE, TILE_SIZE, TILE_SIZE), 1)
         # sets event_stop after closing the game window
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
