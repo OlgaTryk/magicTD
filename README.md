@@ -4,7 +4,13 @@ Elemental Kingdom: Guardians of the Realm is a tower defense game in about wizar
 
 ## Game Screen ##
 
-![gameScreen](https://github.com/OlgaTryk/magicTD/assets/127615584/c8798407-3f4a-451d-8457-a9a029ae6e5b)
+![gameScreen](https://github.com/OlgaTryk/magicTD/assets/127615584/1163dbdb-31a2-4744-ac5b-7868b42f1c9d)
+
+
+## Towers ##
+- magic tower - attacks one enemy, low damage, high speed and range
+- ice tower - slows all enemies in range, doesn't do damage
+- fire tower - attacks all enemies in range, high damage, low speed and range
 
 ## Controls ##
 | | |
@@ -14,6 +20,7 @@ Elemental Kingdom: Guardians of the Realm is a tower defense game in about wizar
 |Spacebar | Start next wave|
 |1 | Place magic tower|
 |2 | Place ice tower |
+|3 | Place fire tower |
 
 ## Threads ##
 - _Main thread_ - draws the game window
