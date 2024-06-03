@@ -17,7 +17,7 @@ class Game:
 
     def __init__(self):
         self.lives = 100
-        self.money = 200
+        self.money = 100
         self.curr_wave = 0
         self.max_wave = 10
         self.is_wave_over = True  # is there a wave in progress ( aka unspawned or unkilled enemies)

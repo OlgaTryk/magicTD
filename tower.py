@@ -27,15 +27,13 @@ class Tower:
                     self.is_attacking = True
                     # ice towers don't do damage
                     if self.tower_type == "ice":
-                        enemy.is_slowed = True
+                        enemy.slow_down()
                     else:
                         enemy.take_damage(self.damage)
                     # magic towers target only the first enemy
                     if self.tower_type == "magic":
                         self.target = enemy
                         break
-                elif self.tower_type == "ice":
-                    enemy.is_slowed = False
 
             time.sleep(1/self.speed)
 

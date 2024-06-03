@@ -8,6 +8,7 @@ from data.screen_data import TILE_SIZE, PATH
 
 
 class Enemy:
+
     def __init__(self, enemy_type):
         self.enemy_type = enemy_type
         self.health = ENEMY_TYPES.get(enemy_type)["health"]
@@ -17,8 +18,9 @@ class Enemy:
         self.pos = [(PATH[0][0] * TILE_SIZE) - TILE_SIZE,
                     PATH[0][1] * TILE_SIZE]  # enemies spawn offscreen
         self.tile = 0  # index of the current tile on the path
-        self.is_slowed = False
+        self.slowed_time = 0
         self.health_lock = threading.Lock()
+        self.slow_lock = threading.Lock()
 
     def move(self, game):
         """ moves along the path towards the exit """
@@ -40,8 +42,10 @@ class Enemy:
                     and self.pos[1] == PATH[self.tile + 1][1] * TILE_SIZE):
                 # current position == next tile -> set next tile as current tile
                 self.tile += 1
-            if self.is_slowed:
-                time.sleep(2/self.speed)
+            if self.slowed_time > 0:
+                with self.slow_lock:
+                    self.slowed_time -= 1
+                time.sleep(3/self.speed)
             else:
                 time.sleep(1/self.speed)
         game.lose_lives(self.damage)
@@ -54,6 +58,11 @@ class Enemy:
                 self.health -= damage
             else:
                 self.health = 0
+
+    def slow_down(self):
+        """ slows down the enemy (used by ice towers) """
+        with self.slow_lock:
+            self.slowed_time = 20
 
     def reached_end(self):
         """ returns True if the enemy has reached the end of the path"""

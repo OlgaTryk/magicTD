@@ -19,11 +19,13 @@ bg = pygame.image.load("assets/background.png")
 font = pygame.freetype.Font("assets/segoeuib.ttf", 40)
 enemy_sprites = {
     "goblin": pygame.image.load("assets/enemies/goblin.png"),
-    "orc": pygame.image.load("assets/enemies/orc.png")
+    "orc": pygame.image.load("assets/enemies/orc.png"),
+    "bat": pygame.image.load("assets/enemies/bat.png"),
 }
 enemy_sprites_frozen = {
     "goblin": pygame.image.load("assets/enemies/goblin_frozen.png"),
-    "orc": pygame.image.load("assets/enemies/orc_frozen.png")
+    "orc": pygame.image.load("assets/enemies/orc_frozen.png"),
+    "bat": pygame.image.load("assets/enemies/bat_frozen.png"),
 }
 tower_sprites = {
     "magic": pygame.image.load("assets/towers/magic_tower.png"),
@@ -77,7 +79,7 @@ def main():
             # draw enemies
             if not game.is_wave_over:
                 for enemy in game.enemies:
-                    if enemy.is_slowed:
+                    if enemy.slowed_time > 0:
                         screen.blit(enemy_sprites_frozen[enemy.enemy_type], (enemy.pos[0], enemy.pos[1]))
                     else:
                         screen.blit(enemy_sprites[enemy.enemy_type], (enemy.pos[0], enemy.pos[1]))
@@ -92,7 +94,7 @@ def main():
         for i in range(0, len(tower_sprites)):
             font.render_to(screen, (360 + 60 * 3 * i, 495),
                            str(TOWER_TYPES.get(list(TOWER_TYPES.keys())[i])["price"]), BLACK)
-        # sets event_stop after closing the game window
+        # set event_stop after closing the game window
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 event_stop.set()

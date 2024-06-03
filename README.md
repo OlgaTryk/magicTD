@@ -22,13 +22,14 @@ Elemental Kingdom: Guardians of the Realm is a tower defense game in about wizar
 - _Enemy threads_ - move the enemy they apply to, kill it and give money when it runs out of health, remove lives when it reaches the end
 - _Tower threads_ - find and attack enemies in range
 
-## Critical sections ##
-| Resource | Type |
-| ---|---|
-| Player lives | Mutex |
-| Player money | Mutex |
-| Enemy health | Mutex |
+## Critical Sections ##
+| Resource              | Type |
+|-----------------------|---|
+| Player lives          | Mutex |
+| Player money          | Mutex |
+| Enemy health          | Mutex |
+| Enemy slow down timer | Mutex |
 
-### Modules ###
+### External Modules ###
 - pygame
 

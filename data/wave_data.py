@@ -8,10 +8,16 @@ ENEMY_TYPES = {
         "money": 5
     },
     "orc": {
-        "health": 100,
+        "health": 200,
         "speed": 50,
         "damage": 10,
         "money": 15
+    },
+    "bat": {
+        "health": 50,
+        "speed": 1000,
+        "damage": 5,
+        "money": 5
     }
 }
 
@@ -29,9 +35,9 @@ TOWER_TYPES = {
         "range": 1
     },
     "fire": {
-        "damage": 5,
+        "damage": 10,
         "speed": 2,
-        "price": 400,
+        "price": 500,
         "range": 1
     }
 
@@ -44,7 +50,7 @@ WAVE_SPAWN_DATA = [
     },
     # wave 2
     {
-        "goblin": 5
+        "goblin": 4
     },
     # wave 3
     {
@@ -63,6 +69,7 @@ WAVE_SPAWN_DATA = [
     },
     # wave 6
     {
+        "bat": 1,
         "goblin": 20,
         "orc": 10
     },
@@ -73,15 +80,18 @@ WAVE_SPAWN_DATA = [
     },
     # wave 8
     {
+        "bat": 5,
         "orc": 30
     },
     # wave 9
     {
+        "bat": 10,
         "goblin": 30,
         "orc": 30
     },
     # wave 10
     {
+        "bat": 30,
         "goblin": 50,
         "orc": 50
     }
